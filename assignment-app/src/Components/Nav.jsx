@@ -12,7 +12,7 @@ const Nav = () => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                            <a className="nav-link" href="/search">Search</a>
+                            <a className="nav-link" href="/search">Search Through Dataset</a>
                             </li>
                         </ul>
                     </div> 
