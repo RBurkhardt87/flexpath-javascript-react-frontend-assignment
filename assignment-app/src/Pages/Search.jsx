@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { submitSearch } from '../Services/SearchService';
 
 const Search = () => {
 
-    const [filterType, setFilterType] = useState("");
+    const [filterType, setFilterType] = useState("1");
     const [keyword, setKeyword] = useState("");
+    const [error, setError] = useState("");
 
 
     function handleFilterType(e) {
@@ -14,18 +16,31 @@ const Search = () => {
         setKeyword(e.target.value);
     }
 
+
     async function handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault();                
 
-        //maybe do a try catch block here... 
-        //TODO: pause here and read up more on documentation. Seems a little different than sending it to our backend like in media wrangler
-        // const data = await fetch(`/api/data/search`);
+        const dataInput = {
+            filterType,
+            keyword
+        }
 
-
+        console.log("Submitting: ", dataInput);
         
-    }
+        try {
+            const responseMessage = await submitSearch(dataInput); 
 
-
+            if (responseMessage === "Success") {
+                console.log("Search was successful");        
+            } else {
+                setError(responseMessage);
+            }        
+        } catch (error) {
+            console.error("Unexpected error during search submission: ", error);
+            setError({error: "An unexpected error occurred. Please try again"})
+        }
+    };
+        
 
 
 
@@ -37,7 +52,6 @@ const Search = () => {
             <br />
             <form onSubmit={ handleSubmit }>
                 <p>Select data point to filter search by</p>
-                {/* put dropdown filterType options here */}
                 <div className='col-sm-2'>
                     <select 
                         className="form-select"
@@ -54,7 +68,6 @@ const Search = () => {
                 </div>
                 <br />
 
-                {/* create field input here for free search using keyword */}
                 <div className="col-sm-4">
                     <input 
                         type="text" 
@@ -69,11 +82,12 @@ const Search = () => {
                 <br />
 
                 <div className='col-sm-4'>
-                    <button type="button" className="form-control btn btn-outline-secondary"> Search </button>
+                    <button type="submit" className="form-control btn btn-outline-secondary"> Search </button>
                 </div>
 
             </form>
             <br />
+            
             <p>Display Message will be here... but will make it dynamic data</p>
 
             {/* Have cards here */}
