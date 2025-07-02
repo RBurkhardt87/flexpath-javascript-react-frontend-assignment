@@ -6,6 +6,7 @@
                 }
             );
             console.log("Response:", response);
+            console.log("Submitting: ", dataInput);
 
             if (response.status === 201) {          
                 console.log("Submitting search");
