@@ -5,6 +5,20 @@ import ResultsCard from '../Components/ResultsCard'
 
 const Search = () => {
 
+  //NOTE: This is allowing me to fetch all the JSON objects from the api (700)
+
+  async function getData() {
+     const response = await fetch(`/api/data/search`).then(response => response.json()).then((data) => console.log(data));
+     console.log("Response: ", response);
+  }
+  
+  getData();
+
+
+
+
+  
+
   return (
     <div>
         <div className='container'>
@@ -12,6 +26,7 @@ const Search = () => {
             <br />
             <br />
 
+             
             <SearchForm />
             
             <br />
