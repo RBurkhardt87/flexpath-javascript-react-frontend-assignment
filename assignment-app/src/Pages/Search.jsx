@@ -1,5 +1,6 @@
 import React from 'react'
 import SearchForm from '../Components/SearchForm'
+import ResultsCard from '../Components/ResultsCard'
 
 
 const Search = () => {
@@ -18,6 +19,7 @@ const Search = () => {
             <p>Display Message will be here... but will make it dynamic data</p>
 
             {/* Have cards here */}
+            <ResultsCard />
 
             <br />
 

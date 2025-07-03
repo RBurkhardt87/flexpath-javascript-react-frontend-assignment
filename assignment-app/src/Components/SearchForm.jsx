@@ -3,7 +3,7 @@ import { submitSearch } from '../Services/SearchService';
 
 const SearchForm = () => {
 
-    const [filterType, setFilterType] = useState("1");
+    const [filterType, setFilterType] = useState("Device Model");
     const [keyword, setKeyword] = useState("");
     const [error, setError] = useState("");
 
@@ -52,10 +52,10 @@ const SearchForm = () => {
                         value= { filterType }
                         onChange={ handleFilterType }
                     >
-                        <option value="1">model</option>
-                        <option value="2">gender</option>
-                        <option value="3">operatingSystem</option>
-                        <option value="4">behaviorclass</option>
+                        <option value="Device Model">model</option>
+                        <option value="Gender">gender</option>
+                        <option value="Operating System">operatingSystem</option>
+                        <option value="User Behavior Class">behaviorclass</option>
                     </select>
                 </div>
                 <br />
