@@ -17,7 +17,9 @@ const SearchForm = () => {
     }
 
     async function handleSubmit(e) {
-        e.preventDefault();                
+        e.preventDefault();        
+        
+        
 
         const dataInput = {
             filterType,
