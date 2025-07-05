@@ -35,8 +35,12 @@ const SearchPage = () => {
         //BEGIN FILTERING THE DATA USING USER INPUT
         //NOTE: look at Looping and Conditional Branching in JS video 
 
-        let filteredData = data.filter(item => item[filterType] === keyword);
-        console.log("filtered results: ", filteredData);
+        
+
+        let filteredData = data.filter(item => 
+            item[filterType].toLowerCase() === keyword.toLowerCase()
+        );
+            console.log("filtered results: ", filteredData);
 
 
 
