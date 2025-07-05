@@ -30,6 +30,16 @@ const SearchPage = () => {
             const response = await fetch("/api/data/search");
             const data = await response.json();
             console.log(data);
+
+
+        //BEGIN FILTERING THE DATA USING USER INPUT
+        //NOTE: look at Looping and Conditional Branching in JS video 
+
+        let filteredData = data.filter(item => item[filterType] === keyword);
+        console.log("filtered results: ", filteredData);
+
+
+
         } catch (error) {
             console.error("Something went wrong", error);
         }
@@ -52,10 +62,6 @@ const SearchPage = () => {
 */              
 
     
-
-
-
-
 
 
   return (
