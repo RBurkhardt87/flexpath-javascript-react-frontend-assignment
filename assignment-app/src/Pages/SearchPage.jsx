@@ -9,7 +9,7 @@ const SearchPage = () => {
     const [filterType, setFilterType] = useState("Device Model");
     const [keyword, setKeyword] = useState("");
     const [error, setError] = useState("");
-    const [results, setResults] = useState(null);
+    const [results, setResults] = useState([]);
     
     
     
@@ -40,8 +40,10 @@ const SearchPage = () => {
         let filteredData = data.filter(item => 
             item[filterType].toLowerCase() === keyword.toLowerCase()
         );
-            console.log("filtered results: ", filteredData);
 
+        console.log("filtered results: ", filteredData);
+        setResults(filteredData);
+       
 
 
         } catch (error) {
@@ -49,11 +51,10 @@ const SearchPage = () => {
         }
     }
 
+     console.log("Results: ", results);
+
 /*
-        NOTE: I am getting closer. I have the fetch inside the handleSubmit so it is only triggered when user clicks search button
-              I do NOT need to send an object of the users input to the api because -- we aren't storing any info. There is no reason to
-              Instead, I just need to take those inputs for filterType and keyword and use them to filter through the 700 objects that are
-              fetch has returned. 
+        NOTE:
 
               Once I get the filtering to work, I can then start working on displaying the data dynamically in the table. I believe I should be 
               able to map over the objects and create a new row for each one.
@@ -126,29 +127,38 @@ const SearchPage = () => {
      
 
             <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">User Id</th>
-                  <th scope="col">Device Model</th>
-                  <th scope="col">Operating System</th>
-                  <th scope="col">App Usage Time (min/day)</th>
-                  <th scope="col">Screen On Time (hours/day)</th>
-                  <th scope="col">Battery Drain (mAh/day)</th>
-                  <th scope="col">Number of Apps Installed</th>
-                  <th scope="col">Data Usage (MB/day)</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">Gender</th>
-                  <th scope="col">User Behavior Class</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row"></th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-              </tbody>
+                <thead>
+                    <tr>
+                        <th scope="col">User Id</th>
+                        <th scope="col">Device Model</th>
+                        <th scope="col">Operating System</th>
+                        <th scope="col">App Usage Time (min/day)</th>
+                        <th scope="col">Screen On Time (hours/day)</th>
+                        <th scope="col">Battery Drain (mAh/day)</th>
+                        <th scope="col">Number of Apps Installed</th>
+                        <th scope="col">Data Usage (MB/day)</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">User Behavior Class</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {results.map((result, index) => (
+                        <tr key={index}>
+                            <th scope="row">{ result["User ID"] }</th>
+                            <td>{ result["Device Model"]}</td>
+                            <td>{ result["Operating System"]}</td>
+                            <td>{ result["App Usage Time (min/day)"]}</td>
+                            <td>{ result["Screen On Time (hours/day)"]}</td>
+                            <td>{ result["Battery Drain (mAh/day)"]}</td>
+                            <td>{ result["Number Of Apps Installed"]}</td>
+                            <td>{ result["Data Usage (MB/day)"]}</td>
+                            <td>{ result["Age"]}</td>
+                            <td>{ result["Gender"]}</td>
+                            <td>{ result["User Behavior Class"] }</td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </div>
     </div>
@@ -156,3 +166,14 @@ const SearchPage = () => {
 }
 
 export default SearchPage
+
+/*
+
+Map example:
+      {items.map((item, index) => (
+        <li key={index}>{item}</li> 
+      ))}
+
+
+NOTE: the spaces in the key names are throwing things off, look up how to deal with accessing those values for the table
+*/
