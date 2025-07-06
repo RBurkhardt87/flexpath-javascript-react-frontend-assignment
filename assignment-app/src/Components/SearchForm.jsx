@@ -1,45 +1,9 @@
-import React, { useState } from 'react'
-import { submitSearch } from '../Services/SearchService';
-
-const SearchForm = () => {
-
-    const [filterType, setFilterType] = useState("Device Model");
-    const [keyword, setKeyword] = useState("");
-    const [error, setError] = useState("");
+import React from 'react'
 
 
-    function handleFilterType(e) {
-        setFilterType(e.target.value);
-    }
+const SearchForm = ({ handleSubmit, handleKeyword, handleFilterType, keyword, filterType }) => {
 
-    function handleKeyword(e) {
-        setKeyword(e.target.value);
-    }
-
-    async function handleSubmit(e) {
-        e.preventDefault();        
-        
-        
-
-        const dataInput = {
-            filterType,
-            keyword
-        }
-        
-        try {
-            const responseMessage = await submitSearch(dataInput); 
-
-            if (responseMessage === "Success") {
-                console.log("Search was successful");        
-            } else {
-                setError(responseMessage);
-            }        
-        } catch (error) {
-            console.error("Unexpected error during search submission: ", error);
-            setError({error: "An unexpected error occurred. Please try again"})
-        }
-    };
-        
+          
 
   return (
     <div>
