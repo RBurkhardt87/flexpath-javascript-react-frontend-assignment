@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ResultsCard from '../Components/ResultsCard'
 import ResultsTable from '../Components/ResultsTable';
 import SearchForm from '../Components/SearchForm';
@@ -13,8 +13,44 @@ const SearchPage = () => {
     const [error, setError] = useState("");
     const [results, setResults] = useState([]);
     const [isLoading, SetLoading] = useState(false);
+    const [averageAge, setAverageAge] = useState(0);
+    
+    
+    //Average Handling --- Let's test with Age -- I want to use UseEffect so it only rerenders when the search is changed.
+    // Had to convert the numbers from strings to actual Number data types. Otherwise they were concatenating together. 
+    // Now I know the function works, I should be able to maybe make the property a parameter of the function and use it for all 4 properties.
     
 
+    useEffect(() => {
+        function findAgeAverage(){
+
+            if (results.length > 0){
+                let agesArray = results.map(result => Number(result["Age"]));
+
+                let sumOfAges = agesArray.reduce((acc, curr) => acc + curr, 0);
+                console.log("Sum of Ages: ", sumOfAges);
+
+                let avgOfAges = sumOfAges / agesArray.length;
+                console.log("length of array: ",agesArray);
+                setAverageAge(avgOfAges);  
+            } else {
+                setAverageAge(0);
+            }
+
+        }
+        findAgeAverage();
+    }, [results]);
+    
+    console.log("Average Age: ", averageAge);
+
+  
+
+    
+    
+    
+    
+    
+    //Form Handling
     function handleFilterType(e) {
         setFilterType(e.target.value);
     }
@@ -22,9 +58,7 @@ const SearchPage = () => {
     function handleKeyword(e) {
         setKeyword(e.target.value);
     }
-    
-
-    
+       
     async function handleSubmit(e) {
         e.preventDefault();    
         SetLoading(true);
@@ -57,7 +91,7 @@ const SearchPage = () => {
             }
       
         } catch (error) {
-            console.error("Something went wrong", error);
+            console.error("Error occurred during search: ", error);
         }
     }
 
@@ -68,10 +102,7 @@ const SearchPage = () => {
   return (
     <div>
         <div className='container'>
-            <h1>Search Page</h1>
-            <br />
-            <br />     
-                
+                  
             <SearchForm 
                 handleSubmit={ handleSubmit }
                 handleKeyword={ handleKeyword }
@@ -84,7 +115,17 @@ const SearchPage = () => {
 
             <p>{isLoading ? "Loading..." : "Display Results Here"}</p>
 
-            <ResultsCard />
+            {/* <ResultsCard /> */}
+
+                <div>
+                    <div className="card" >
+                        <div className="card-body">
+                            <h5 className="card-title">Average Age: </h5>
+                            <h6 className="card-subtitle mb-2 text-muted">Average Age: { averageAge } years old</h6>
+                            {/* <p className="card-text">Median - { testingData.median } minutes </p> */}
+                        </div>
+                    </div>
+                </div>
 
             <br />
 
