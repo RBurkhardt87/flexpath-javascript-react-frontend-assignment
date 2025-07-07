@@ -14,40 +14,45 @@ const SearchPage = () => {
     const [results, setResults] = useState([]);
     const [isLoading, SetLoading] = useState(false);
     const [averageAge, setAverageAge] = useState(0);
-    
+    const [averageAppUsage, setAverageAppUsage] = useState(0);
+    const [averageScreenTime, setAverageScreenTime] = useState(0);
+    const [averageAppsInstalled, setAverageAppsInstalled] = useState(0);
+
+
+
+  
     
     //Average Handling --- Let's test with Age -- I want to use UseEffect so it only rerenders when the search is changed.
     // Had to convert the numbers from strings to actual Number data types. Otherwise they were concatenating together. 
     // Now I know the function works, I should be able to maybe make the property a parameter of the function and use it for all 4 properties.
+
+    //So, I was able to bracket notation the property variable in and pass the argument as a string
+    // I think I probably need to do some kind of rounding for the averages...double check the video, but cleaner numbers are more user friendly
     
 
     useEffect(() => {
-        function findAgeAverage(){
+        function findAverage(property){
 
             if (results.length > 0){
-                let agesArray = results.map(result => Number(result["Age"]));
-
-                let sumOfAges = agesArray.reduce((acc, curr) => acc + curr, 0);
-                console.log("Sum of Ages: ", sumOfAges);
-
-                let avgOfAges = sumOfAges / agesArray.length;
-                console.log("length of array: ",agesArray);
-                setAverageAge(avgOfAges);  
+                let propertyArray = results.map(result => Number(result[[property]]));
+                let sum = propertyArray.reduce((acc, curr) => acc + curr, 0);             
+                let avg = sum / propertyArray.length;
+                return Math.round(avg) 
             } else {
-                setAverageAge(0);
+                return 0;
             }
-
         }
-        findAgeAverage();
+        setAverageAppUsage(findAverage("App Usage Time (min/day)"));
+        setAverageScreenTime(findAverage("Screen On Time (hours/day)"));
+        setAverageAppsInstalled(findAverage("Number of Apps Installed"));
+        setAverageAge(findAverage("Number of Apps Installed"));        
     }, [results]);
-    
-    console.log("Average Age: ", averageAge);
 
+
+
+    //Median Handling...
+    
   
-
-    
-    
-    
     
     
     //Form Handling
@@ -113,19 +118,44 @@ const SearchPage = () => {
             
             <br /> 
 
-            <p>{isLoading ? "Loading..." : "Display Results Here"}</p>
+            {/* NOTE: This is what it needs to display when results are returned :::    Display NUMBER Results 
+                        I want to try a nested ternary to get this to function correctly... 
+            */}
 
-            {/* <ResultsCard /> */}
+            <p>{isLoading ? "Loading..." : results ? "Displaying " + results.length + " Results" : "No Results To Display"}</p>
 
-                <div>
-                    <div className="card" >
-                        <div className="card-body">
-                            <h5 className="card-title">Average Age: </h5>
-                            <h6 className="card-subtitle mb-2 text-muted">Average Age: { averageAge } years old</h6>
-                            {/* <p className="card-text">Median - { testingData.median } minutes </p> */}
-                        </div>
-                    </div>
-                </div>
+
+            {/* NOTE: Need to make these result cards inline (columns) and not rows. Also, i can eventually just put the data in an 
+                array of objects that hold the info and map over maybe returning a single card for each object -- I could make a data folder to 
+                hold the array of objects. I am not sure how the variables would work doing it like this though, maybe just try and test it out
+                to see for future knowledge
+            */}
+
+            <div>
+                <ResultsCard 
+                    title= {"App Usage Time (min/day)"}
+                    average={"Average - " + averageAppUsage + " Minutes"}
+                    median = {"Median - " + " Minutes"}                 
+                />
+                <ResultsCard 
+                    title= {"Screen On Time (hours/day)"}
+                    average={"Average - " + averageScreenTime + " Hours"}
+                    median = {"Median - " + " Hours"}                 
+                />
+                <ResultsCard 
+                    title= {"Number of Apps Installed"}
+                    average={"Average - " + averageAppsInstalled + " Apps"}
+                    median = {"Median - " +  " Apps"}                    
+                />
+                <ResultsCard 
+                    title= {"Age"}
+                    average={"Average - " + averageAge + " Years Old"}
+                    median = {"Median - " + " Yeas Old"}                 
+                />
+            </div>
+  
+
+
 
             <br />
 

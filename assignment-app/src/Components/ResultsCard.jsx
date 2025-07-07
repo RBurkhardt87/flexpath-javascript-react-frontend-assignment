@@ -1,32 +1,8 @@
 import React from 'react'
 
-const ResultsCard = () => {
+const ResultsCard = ({ title, average, median }) => {
 
-    let testingData = {
-        title : "App Usage Time min/day",
-        average: "271",
-        median: "227.5"
-    }
-
-    let testData = [
-        {
-            title : "App Usage Time min/day",
-            appUsageTime: "271",
-            
-        },
-        {
-            title : "App Usage Time min/day",
-            appUsageTime: "393",
-        },
-        {
-            title : "App Usage Time min/day",
-            appUsageTime: "239",           
-        },
-        {
-            title : "App Usage Time min/day",
-            appUsageTime: "154",           
-        }
-    ]
+   
 
 
     /*
@@ -71,16 +47,19 @@ const ResultsCard = () => {
 
 
   return (
-    <div>
-        <div className="card" >
-            <div className="card-body">
-                <h5 className="card-title">{ testingData.title }</h5>
-                <h6 className="card-subtitle mb-2 text-muted">Average - { testingData.average } minutes</h6>
-                <p className="card-text">Median - { testingData.median } minutes </p>
-            </div>
-        </div>
-    </div>
+
+                    <div>
+                    <div className="card" >
+                        <div className="card-body">
+                            <h5 className="card-title">{ title }</h5>
+                            <h6 className="card-subtitle mb-2 text-muted">{ average }</h6>
+                            <p className="card-subtitle mb-2 text-muted"> { median } </p>
+                        </div>
+                    </div>
+                </div>
   )
 }
 
 export default ResultsCard
+
+//TODO: Need to align the text in the card as centered
