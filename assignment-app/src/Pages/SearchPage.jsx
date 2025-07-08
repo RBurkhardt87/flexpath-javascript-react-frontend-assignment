@@ -49,11 +49,11 @@ const SearchPage = () => {
         function findMedian(property){
 
             if ( results.length > 0) {
-                let propertyArray = results.map(result => Number(result[property]));
+                let propertyArray = results.map(result => Number(result[property])).sort((a, b) => a - b);
                
                 if ( propertyArray.length % 2 === 0) {
                     let medianIndex1 = propertyArray.length /2;
-                    let medianIndex2 = medianIndex1 + 1;
+                    let medianIndex2 = medianIndex1 - 1;
                     let medianNum = ((propertyArray[medianIndex1] + propertyArray[medianIndex2]) /2);
                     return medianNum;
                 } else {
