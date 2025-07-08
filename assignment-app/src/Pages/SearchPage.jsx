@@ -17,19 +17,13 @@ const SearchPage = () => {
     const [averageAppUsage, setAverageAppUsage] = useState(0);
     const [averageScreenTime, setAverageScreenTime] = useState(0);
     const [averageAppsInstalled, setAverageAppsInstalled] = useState(0);
+    const [medianAge, setMedianAge] = useState(0);
+    const [medianAppUsage, setMedianAppUsage] = useState(0);
+    const [medianScreenTime, setMedianScreenTime] = useState(0);
+    const [medianAppsInstalled, setMedianAppsInstalled] = useState(0);
+   
 
-
-
-  
-    
-    //Average Handling --- Let's test with Age -- I want to use UseEffect so it only rerenders when the search is changed.
-    // Had to convert the numbers from strings to actual Number data types. Otherwise they were concatenating together. 
-    // Now I know the function works, I should be able to maybe make the property a parameter of the function and use it for all 4 properties.
-
-    //So, I was able to bracket notation the property variable in and pass the argument as a string
-    // I think I probably need to do some kind of rounding for the averages...double check the video, but cleaner numbers are more user friendly
-    
-
+    //Average Handling
     useEffect(() => {
         function findAverage(property){
 
@@ -50,40 +44,55 @@ const SearchPage = () => {
 
 
 
-    //Median Handling...
+    //Median Handling
+    useEffect(() => {
+        function findMedian(property){
+
+            if ( results.length > 0) {
+                let propertyArray = results.map(result => Number(result[property]));
+               
+                if ( propertyArray.length % 2 === 0) {
+                    let medianIndex1 = propertyArray.length /2;
+                    let medianIndex2 = medianIndex1 + 1;
+                    let medianNum = ((propertyArray[medianIndex1] + propertyArray[medianIndex2]) /2);
+                    return medianNum;
+                } else {
+                    let medianIndex = Math.floor(propertyArray.length /2);
+                    let medianNum = propertyArray[medianIndex];   
+                    return medianNum;                
+                } 
+            } else {
+                return 0;
+            }             
+        }
+        setMedianAppUsage(findMedian("App Usage Time (min/day)"));
+        setMedianScreenTime(findMedian("Screen On Time (hours/day)"));
+        setMedianAppsInstalled(findMedian("Number of Apps Installed"));
+        setMedianAge(findMedian("Number of Apps Installed")); 
+    }, [results]);
     
   
-    
-    
+        
     //Form Handling
     function handleFilterType(e) {
         setFilterType(e.target.value);
     }
 
+
     function handleKeyword(e) {
         setKeyword(e.target.value);
     }
+
        
     async function handleSubmit(e) {
         e.preventDefault();    
         SetLoading(true);
                 
-        //FETCH ALL THE DATA FROM API
         try {
             const response = await fetch("/api/data/search");
             const data = await response.json();
             console.log(data);
             
-            
-
-
-        //BEGIN FILTERING THE DATA USING USER INPUT
-        //NOTE: TODO: Look at the demo video, I think I should change strictly equal to includes() for better user experience. 
-        //The user may just want to search through all iphones and currently they would get no results if they did so. 
-        //NOTE: If I make it includes then male and female aren't differentiated. 
-
-
-
             if (keyword){
                 let filteredData = data.filter(item => 
                 item[filterType].toLowerCase() === keyword.toLowerCase());
@@ -100,65 +109,43 @@ const SearchPage = () => {
         }
     }
 
-     console.log("Results: ", results);
-
            
 
   return (
     <div>
-        <div className='container'>
-                  
+        <div className='container'>                  
             <SearchForm 
                 handleSubmit={ handleSubmit }
                 handleKeyword={ handleKeyword }
                 handleFilterType={ handleFilterType }
                 keyword = { keyword }
                 filterType = { filterType }                
-            />
-            
+            />            
             <br /> 
-
-            {/* NOTE: This is what it needs to display when results are returned :::    Display NUMBER Results 
-                        I want to try a nested ternary to get this to function correctly... 
-            */}
-
             <p>{isLoading ? "Loading..." : results ? "Displaying " + results.length + " Results" : "No Results To Display"}</p>
-
-
-            {/* NOTE: Need to make these result cards inline (columns) and not rows. Also, i can eventually just put the data in an 
-                array of objects that hold the info and map over maybe returning a single card for each object -- I could make a data folder to 
-                hold the array of objects. I am not sure how the variables would work doing it like this though, maybe just try and test it out
-                to see for future knowledge
-            */}
-
             <div>
                 <ResultsCard 
                     title= {"App Usage Time (min/day)"}
                     average={"Average - " + averageAppUsage + " Minutes"}
-                    median = {"Median - " + " Minutes"}                 
+                    median = {"Median - " + medianAppUsage + " Minutes"}                 
                 />
                 <ResultsCard 
                     title= {"Screen On Time (hours/day)"}
                     average={"Average - " + averageScreenTime + " Hours"}
-                    median = {"Median - " + " Hours"}                 
+                    median = {"Median - " + medianScreenTime + " Hours"}                 
                 />
                 <ResultsCard 
                     title= {"Number of Apps Installed"}
                     average={"Average - " + averageAppsInstalled + " Apps"}
-                    median = {"Median - " +  " Apps"}                    
+                    median = {"Median - " + medianAppsInstalled + " Apps"}                    
                 />
                 <ResultsCard 
                     title= {"Age"}
                     average={"Average - " + averageAge + " Years Old"}
-                    median = {"Median - " + " Yeas Old"}                 
+                    median = {"Median - " + medianAge + " Yeas Old"}                 
                 />
             </div>
-  
-
-
-
             <br />
-
             <ResultsTable results={ results } />     
         </div>
     </div>
