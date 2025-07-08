@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 
 const ResultsTable = ({ results }) => {
@@ -42,3 +43,7 @@ const ResultsTable = ({ results }) => {
 }
 
 export default ResultsTable
+
+ResultsTable.propTypes = {
+    results: PropTypes.array
+};

@@ -113,7 +113,9 @@ const SearchPage = () => {
 
   return (
     <div>
-        <div className='container'>                  
+
+
+        <div className='container'>            
             <SearchForm 
                 handleSubmit={ handleSubmit }
                 handleKeyword={ handleKeyword }
@@ -123,28 +125,36 @@ const SearchPage = () => {
             />            
             <br /> 
             <p>{isLoading ? "Loading..." : results ? "Displaying " + results.length + " Results" : "No Results To Display"}</p>
-            <div>
-                <ResultsCard 
-                    title= {"App Usage Time (min/day)"}
-                    average={"Average - " + averageAppUsage + " Minutes"}
-                    median = {"Median - " + medianAppUsage + " Minutes"}                 
-                />
-                <ResultsCard 
-                    title= {"Screen On Time (hours/day)"}
-                    average={"Average - " + averageScreenTime + " Hours"}
-                    median = {"Median - " + medianScreenTime + " Hours"}                 
-                />
-                <ResultsCard 
-                    title= {"Number of Apps Installed"}
-                    average={"Average - " + averageAppsInstalled + " Apps"}
-                    median = {"Median - " + medianAppsInstalled + " Apps"}                    
-                />
-                <ResultsCard 
-                    title= {"Age"}
-                    average={"Average - " + averageAge + " Years Old"}
-                    median = {"Median - " + medianAge + " Yeas Old"}                 
-                />
-            </div>
+            <div className="row align-items-start">
+                <div className="col">
+                    <ResultsCard 
+                        title= {"App Usage Time (min/day)"}
+                        average={"Average - " + averageAppUsage + " Minutes"}
+                        median = {"Median - " + medianAppUsage + " Minutes"}                 
+                    />
+                </div>             
+                <div className="col">
+                    <ResultsCard 
+                        title= {"Screen On Time (hours/day)"}
+                        average={"Average - " + averageScreenTime + " Hours"}
+                        median = {"Median - " + medianScreenTime + " Hours"}                 
+                    />
+                </div>   
+                <div className="col">
+                    <ResultsCard 
+                        title= {"Number of Apps Installed"}
+                        average={"Average - " + averageAppsInstalled + " Apps"}
+                        median = {"Median - " + medianAppsInstalled + " Apps"}                    
+                    />
+                </div>
+                <div className="col">
+                    <ResultsCard 
+                        title= {"Age"}
+                        average={"Average - " + averageAge + " Years Old"}
+                        median = {"Median - " + medianAge + " Yeas Old"}                 
+                    />
+                </div>
+            </div>     
             <br />
             <ResultsTable results={ results } />     
         </div>

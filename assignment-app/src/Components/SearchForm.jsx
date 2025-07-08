@@ -1,10 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 
 
 const SearchForm = ({ handleSubmit, handleKeyword, handleFilterType, keyword, filterType }) => {
 
           
-
   return (
     <div>
         <div className='container'>
@@ -48,4 +48,12 @@ const SearchForm = ({ handleSubmit, handleKeyword, handleFilterType, keyword, fi
   )
 }
 
-export default SearchForm
+export default SearchForm;
+
+SearchForm.propTypes = {
+    handleSubmit: PropTypes.func,
+    handleKeyword: PropTypes.func,
+    handleFilterType: PropTypes.func,
+    keyword: PropTypes.string,
+    filterType: PropTypes.string
+};
