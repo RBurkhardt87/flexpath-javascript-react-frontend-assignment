@@ -2,11 +2,12 @@ import React from 'react'
 import Nav from '../Components/Nav'
 
 const Home = () => {
+  
   return (
     <div>
       <div className='container'>
         <h1>User Behavior Dataset</h1>
-        <p>This dataset provides a comprehensive analysis of mobile devic usage patterns and user behavior classification. It contains 700 samples of user data, including metrics such as app usage time, screen-on time, battery drain, and data consumption. Each entry is categorized into one of five user behavior classes, ranging from light to extreme usage, allowing for insightful analysis and modeling.
+        <p>This dataset provides a comprehensive analysis of mobile device usage patterns and user behavior classification. It contains 700 samples of user data, including metrics such as app usage time, screen-on time, battery drain, and data consumption. Each entry is categorized into one of five user behavior classes, ranging from light to extreme usage, allowing for insightful analysis and modeling.
         </p>
         <h1>Key Features:</h1>
         <ul>
